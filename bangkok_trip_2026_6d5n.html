@@ -1,0 +1,1856 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>曼谷之旅 | Bangkok Trip</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    /* --------------------------
+       Base
+    -------------------------- */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root{
+      --bg1:#1a1a2e;
+      --bg2:#16213e;
+      --gold:#ffd700;
+      --orange:#ff6b35;
+      --glass: rgba(255,255,255,0.10);
+      --glass2: rgba(255,255,255,0.14);
+      --stroke: rgba(255,255,255,0.20);
+      --stroke2: rgba(255,255,255,0.26);
+      --shadow: rgba(0,0,0,0.35);
+      --good:#4ade80;
+      --warn:#fbbf24;
+      --bad:#fb7185;
+      --chip: rgba(255,255,255,0.08);
+      --chip2: rgba(255,255,255,0.12);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Noto Sans TC', sans-serif;
+      background: linear-gradient(135deg, var(--bg1) 0%, var(--bg2) 100%);
+      min-height: 100vh;
+      color: #fff;
+      overflow-x: hidden;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* --------------------------
+       Floating Elements
+    -------------------------- */
+    .floating-elements {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+      overflow: hidden;
+    }
+
+    .floating-element {
+      position: absolute;
+      font-size: 2rem;
+      opacity: 0.1;
+      animation: float 20s infinite;
+    }
+
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 0;
+      }
+      10% { opacity: 0.1; }
+      90% { opacity: 0.1; }
+      100% {
+        transform: translateY(-100px) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    /* --------------------------
+       Top Nav
+    -------------------------- */
+    .topbar{
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 50;
+      padding: 14px 18px;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      justify-content: space-between;
+      background: linear-gradient(180deg, rgba(0,0,0,0.45), rgba(0,0,0,0.10));
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .brand{
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 220px;
+    }
+
+    .brand .logo{
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--gold), var(--orange));
+      display: grid;
+      place-items: center;
+      box-shadow: 0 10px 30px rgba(255,215,0,0.15);
+      font-size: 18px;
+      font-weight: 800;
+      color: #1b1b2e;
+    }
+
+    .brand .titles{
+      display: flex;
+      flex-direction: column;
+      line-height: 1.1;
+    }
+
+    .brand .titles .t1{ font-weight: 700; }
+    .brand .titles .t2{ font-size: 0.85rem; opacity: 0.75; }
+
+    .nav-actions{
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .pill{
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.14);
+      cursor: pointer;
+      user-select: none;
+      transition: transform .2s ease, border-color .2s ease, background .2s ease;
+      font-size: 0.92rem;
+    }
+
+    .pill:hover{ transform: translateY(-1px); border-color: rgba(255,255,255,0.25); background: rgba(255,255,255,0.11); }
+    .pill i{ color: var(--gold); }
+
+    .pill.primary{
+      background: linear-gradient(135deg, rgba(255,215,0,0.20), rgba(255,107,53,0.18));
+      border-color: rgba(255,215,0,0.28);
+    }
+
+    .pill.primary:hover{ border-color: rgba(255,215,0,0.45); }
+
+    .pill.active{ outline: 2px solid rgba(255,215,0,0.30); }
+
+    .kbd{
+      font-size: 0.75rem;
+      opacity: 0.7;
+      padding: 3px 8px;
+      border-radius: 8px;
+      background: rgba(0,0,0,0.25);
+      border: 1px solid rgba(255,255,255,0.10);
+    }
+
+    /* --------------------------
+       Hero
+    -------------------------- */
+    .hero {
+      height: 100vh;
+      background: linear-gradient(rgba(0,0,0,0.40), rgba(0,0,0,0.62)),
+      url('https://images.unsplash.com/photo-1693501107615-a412a9e29ccf?auto=format&fit=crop&fm=jpg&q=80&w=3000') center/cover;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      padding: 0 20px;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(45deg, var(--orange), #f7c59f, #efefd0, var(--orange));
+      background-size: 400% 400%;
+      animation: gradientShift 15s ease infinite;
+      opacity: 0.10;
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .hero-inner{
+      position: relative;
+      max-width: 980px;
+      width: 100%;
+    }
+
+    .hero h1 {
+      font-size: 4rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      animation: fadeInDown 1s ease;
+      text-shadow: 2px 2px 20px rgba(0,0,0,0.55);
+      letter-spacing: 1px;
+    }
+
+    .hero h1 span { color: var(--gold); }
+
+    .hero p {
+      font-size: 1.5rem;
+      opacity: 0;
+      animation: fadeInUp 1s ease 0.5s forwards;
+    }
+
+    .hero-badges{
+      margin-top: 18px;
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeInUp 1s ease 0.9s forwards;
+    }
+
+    .badge{
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.10);
+      border: 1px solid rgba(255,255,255,0.18);
+      backdrop-filter: blur(10px);
+      font-size: 0.95rem;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+    }
+
+    .badge i{ color: var(--gold); }
+
+    .scroll-indicator {
+      position: absolute;
+      bottom: 30px;
+      animation: bounce 2s infinite;
+      cursor: pointer;
+    }
+
+    .scroll-indicator i {
+      font-size: 2rem;
+      color: var(--gold);
+    }
+
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+      40% { transform: translateY(-20px); }
+      60% { transform: translateY(-10px); }
+    }
+
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-50px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(50px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* --------------------------
+       Summary / Controls Section
+    -------------------------- */
+    .summary-section{
+      padding: 80px 20px 30px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 2.5rem;
+      margin-bottom: 22px;
+      position: relative;
+    }
+
+    .section-title::after {
+      content: '';
+      display: block;
+      width: 100px;
+      height: 4px;
+      background: linear-gradient(90deg, var(--gold), var(--orange));
+      margin: 15px auto 0;
+      border-radius: 2px;
+    }
+
+    .subtitle{
+      text-align: center;
+      opacity: 0.75;
+      max-width: 820px;
+      margin: 0 auto 28px;
+      line-height: 1.6;
+    }
+
+    .summary-grid{
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 16px;
+      align-items: stretch;
+    }
+
+    .panel{
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 22px;
+      padding: 18px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 18px 50px rgba(0,0,0,0.25);
+    }
+
+    .panel h3{
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .panel h3 i{ color: var(--gold); }
+
+    .chips{
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .chip{
+      background: var(--chip);
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 999px;
+      padding: 9px 12px;
+      font-size: 0.92rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      transition: transform .2s ease, background .2s ease, border-color .2s ease;
+      user-select: none;
+    }
+
+    .chip:hover{ transform: translateY(-1px); background: var(--chip2); border-color: rgba(255,255,255,0.25); }
+    .chip.active{ outline: 2px solid rgba(255,215,0,0.28); }
+
+    .chip i{ color: var(--gold); }
+
+    .stats{
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 10px;
+    }
+
+    .stat{
+      background: rgba(0,0,0,0.18);
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: 18px;
+      padding: 14px;
+      text-align: center;
+    }
+
+    .stat .num{ font-size: 1.6rem; font-weight: 800; color: var(--gold); }
+    .stat .lbl{ opacity: 0.75; margin-top: 4px; font-size: 0.92rem; }
+
+    .mini-row{
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+
+    .input{
+      flex: 1;
+      min-width: 240px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 14px;
+      border-radius: 16px;
+      background: rgba(0,0,0,0.18);
+      border: 1px solid rgba(255,255,255,0.10);
+    }
+
+    .input i{ color: var(--gold); }
+
+    .input input{
+      width: 100%;
+      border: none;
+      outline: none;
+      background: transparent;
+      color: #fff;
+      font-size: 0.98rem;
+    }
+
+    .toggle{
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 14px;
+      border-radius: 16px;
+      background: rgba(0,0,0,0.18);
+      border: 1px solid rgba(255,255,255,0.10);
+      cursor: pointer;
+      user-select: none;
+      transition: transform .2s ease, border-color .2s ease;
+    }
+
+    .toggle:hover{ transform: translateY(-1px); border-color: rgba(255,255,255,0.18); }
+
+    .switch{
+      width: 44px;
+      height: 24px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.16);
+      position: relative;
+      border: 1px solid rgba(255,255,255,0.10);
+    }
+
+    .switch::after{
+      content:'';
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--gold), var(--orange));
+      position: absolute;
+      top: 50%;
+      left: 3px;
+      transform: translateY(-50%);
+      transition: left .22s ease;
+    }
+
+    .toggle[data-on="true"] .switch::after{ left: 23px; }
+
+    /* --------------------------
+       Timeline
+    -------------------------- */
+    .timeline-section {
+      padding: 30px 20px 80px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .timeline {
+      position: relative;
+      padding: 20px 0;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 4px;
+      height: 100%;
+      background: linear-gradient(180deg, var(--gold), var(--orange), var(--gold));
+      border-radius: 2px;
+    }
+
+    .day-card {
+      display: flex;
+      justify-content: flex-end;
+      padding: 20px 40px;
+      position: relative;
+      width: 50%;
+      opacity: 0;
+      transform: translateX(-100px);
+      transition: all 0.6s ease;
+    }
+
+    .day-card.visible { opacity: 1; transform: translateX(0); }
+
+    .day-card:nth-child(even) {
+      justify-content: flex-start;
+      margin-left: 50%;
+      transform: translateX(100px);
+    }
+
+    .day-card:nth-child(even).visible { transform: translateX(0); }
+
+    .day-card::before {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: var(--gold);
+      border-radius: 50%;
+      right: -10px;
+      top: 35px;
+      box-shadow: 0 0 20px var(--gold);
+      animation: pulse 2s infinite;
+    }
+
+    .day-card:nth-child(even)::before { left: -10px; right: auto; }
+
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 20px var(--gold); }
+      50% { box-shadow: 0 0 40px var(--gold), 0 0 60px var(--orange); }
+    }
+
+    .card-content {
+      background: var(--glass);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 30px;
+      max-width: 480px;
+      border: 1px solid var(--stroke);
+      transition: all 0.25s ease;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card-content::after{
+      content:'';
+      position:absolute;
+      inset:-30px;
+      background: radial-gradient(circle at 20% 20%, rgba(255,215,0,0.18), transparent 45%),
+                  radial-gradient(circle at 85% 40%, rgba(255,107,53,0.16), transparent 45%);
+      opacity: 0.0;
+      transition: opacity .25s ease;
+      pointer-events:none;
+    }
+
+    .card-content:hover { transform: translateY(-10px) scale(1.02); box-shadow: 0 22px 50px rgba(255,215,0,0.12); border-color: rgba(255,215,0,0.45); }
+    .card-content:hover::after{ opacity: 1; }
+
+    .day-header { display: flex; align-items: center; gap: 15px; margin-bottom: 16px; }
+
+    .day-number {
+      background: linear-gradient(135deg, var(--gold), var(--orange));
+      width: 60px;
+      height: 60px;
+      border-radius: 15px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      color: #1b1b2e;
+      box-shadow: 0 14px 35px rgba(255,215,0,0.12);
+    }
+
+    .day-number span:first-child { font-size: 0.7rem; opacity: 0.85; letter-spacing: 1px; }
+    .day-number span:last-child { font-size: 1.5rem; }
+
+    .day-title { font-size: 1.25rem; font-weight: 700; }
+    .day-date { font-size: 0.92rem; opacity: 0.72; margin-top: 2px; }
+
+    .meta-row{
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .tag{
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      background: rgba(0,0,0,0.18);
+      border: 1px solid rgba(255,255,255,0.12);
+      font-size: 0.88rem;
+      opacity: 0.95;
+    }
+
+    .tag i{ color: var(--gold); }
+
+    .activities { list-style: none; margin-top: 16px; }
+
+    .activities li {
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.10);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      transition: all 0.25s ease;
+    }
+
+    .activities li:last-child { border-bottom: none; }
+
+    .activities li:hover { padding-left: 10px; color: var(--gold); }
+
+    .activities li i { color: var(--gold); width: 25px; }
+
+    .activity-time { font-size: 0.85rem; color: var(--orange); margin-left: auto; font-weight: 600; }
+
+    .note{
+      margin-top: 14px;
+      padding: 12px 14px;
+      border-radius: 16px;
+      background: rgba(0,0,0,0.16);
+      border: 1px dashed rgba(255,255,255,0.16);
+      font-size: 0.92rem;
+      opacity: 0.9;
+      line-height: 1.55;
+    }
+
+    .note b{ color: var(--gold); }
+
+    .mini-actions{
+      margin-top: 16px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .mini-btn{
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 12px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.09);
+      border: 1px solid rgba(255,255,255,0.14);
+      cursor: pointer;
+      transition: transform .2s ease, border-color .2s ease, background .2s ease;
+      font-size: 0.92rem;
+      user-select: none;
+    }
+
+    .mini-btn:hover{ transform: translateY(-1px); background: rgba(255,255,255,0.12); border-color: rgba(255,215,0,0.35); }
+    .mini-btn i{ color: var(--gold); }
+
+    /* --------------------------
+       Modal
+    -------------------------- */
+    .modal{
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      z-index: 100;
+      background: rgba(0,0,0,0.55);
+      backdrop-filter: blur(8px);
+    }
+
+    .modal.open{ display: flex; }
+
+    .modal-card{
+      width: min(920px, 100%);
+      border-radius: 24px;
+      border: 1px solid rgba(255,255,255,0.16);
+      background: rgba(255,255,255,0.10);
+      box-shadow: 0 30px 90px rgba(0,0,0,0.45);
+      overflow: hidden;
+      position: relative;
+      transform: translateY(12px);
+      opacity: 0;
+      animation: modalIn .18s ease forwards;
+    }
+
+    @keyframes modalIn{
+      to{ transform: translateY(0); opacity: 1; }
+    }
+
+    .modal-top{
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 0;
+    }
+
+    .modal-hero{
+      padding: 18px 18px 10px;
+      background: radial-gradient(circle at 20% 20%, rgba(255,215,0,0.16), transparent 55%),
+                  radial-gradient(circle at 80% 35%, rgba(255,107,53,0.14), transparent 55%);
+    }
+
+    .modal-hero h4{
+      font-size: 1.35rem;
+      font-weight: 800;
+      margin-top: 4px;
+    }
+
+    .modal-hero .small{
+      opacity: 0.75;
+      margin-top: 6px;
+      line-height: 1.5;
+    }
+
+    .modal-kv{
+      padding: 18px;
+      background: rgba(0,0,0,0.20);
+      border-left: 1px solid rgba(255,255,255,0.10);
+    }
+
+    .kv{
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .kv .item{
+      padding: 12px 12px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+    }
+
+    .kv .item .k{ opacity: 0.75; font-size: 0.86rem; }
+    .kv .item .v{ margin-top: 4px; font-weight: 700; }
+
+    .modal-body{
+      padding: 18px;
+    }
+
+    .modal-body h5{
+      font-size: 1.05rem;
+      font-weight: 800;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .modal-body h5 i{ color: var(--gold); }
+
+    .modal-body ul{ list-style: none; }
+
+    .modal-body li{
+      padding: 12px 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 1px solid rgba(255,255,255,0.10);
+    }
+
+    .modal-body li:last-child{ border-bottom: none; }
+
+    .modal-body .t{ opacity: 0.95; }
+    .modal-body .tm{ margin-left: auto; color: var(--orange); font-weight: 700; font-size: 0.9rem; }
+
+    .modal-actions{
+      padding: 14px 18px 18px;
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+      border-top: 1px solid rgba(255,255,255,0.10);
+    }
+
+    .btn{
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 14px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.09);
+      border: 1px solid rgba(255,255,255,0.14);
+      cursor: pointer;
+      transition: transform .2s ease, border-color .2s ease, background .2s ease;
+      user-select: none;
+      font-size: 0.95rem;
+    }
+
+    .btn:hover{ transform: translateY(-1px); background: rgba(255,255,255,0.12); border-color: rgba(255,215,0,0.35); }
+    .btn.primary{ background: linear-gradient(135deg, rgba(255,215,0,0.18), rgba(255,107,53,0.16)); border-color: rgba(255,215,0,0.35); }
+    .btn.primary:hover{ border-color: rgba(255,215,0,0.52); }
+
+    .close-x{
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      background: rgba(0,0,0,0.22);
+      border: 1px solid rgba(255,255,255,0.12);
+      cursor: pointer;
+      transition: transform .2s ease, border-color .2s ease;
+    }
+
+    .close-x:hover{ transform: translateY(-1px); border-color: rgba(255,215,0,0.35); }
+
+    /* Toast */
+    .toast{
+      position: fixed;
+      left: 50%;
+      bottom: 26px;
+      transform: translateX(-50%);
+      background: rgba(0,0,0,0.58);
+      border: 1px solid rgba(255,255,255,0.14);
+      backdrop-filter: blur(10px);
+      padding: 12px 14px;
+      border-radius: 999px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .22s ease, transform .22s ease;
+      z-index: 120;
+      max-width: min(92vw, 860px);
+    }
+
+    .toast.show{ opacity: 1; transform: translateX(-50%) translateY(-6px); }
+    .toast i{ color: var(--gold); }
+    .toast span{ opacity: 0.92; font-size: 0.95rem; }
+
+
+    /* Modal photo strip */
+    .photo-strip{
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+    .photo{
+      position: relative;
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(0,0,0,0.18);
+      min-height: 110px;
+    }
+    .photo img{
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transform: scale(1.02);
+      filter: saturate(1.05);
+    }
+    .photo .cap{
+      position: absolute;
+      left: 10px;
+      right: 10px;
+      bottom: 10px;
+      font-size: 0.86rem;
+      font-weight: 700;
+      text-shadow: 0 6px 20px rgba(0,0,0,0.6);
+      background: linear-gradient(180deg, rgba(0,0,0,0.00), rgba(0,0,0,0.50));
+      padding: 18px 10px 8px;
+      border-radius: 14px;
+      opacity: 0.95;
+    }
+    @media (max-width: 768px){
+      .photo-strip{ grid-template-columns: 1fr; }
+      .photo{ min-height: 150px; }
+    }
+
+
+    /* --------------------------
+       Footer
+    -------------------------- */
+    .footer {
+      text-align: center;
+      padding: 40px;
+      background: rgba(0,0,0,0.28);
+      margin-top: 40px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .footer p { opacity: 0.7; }
+
+    /* --------------------------
+       Responsive
+    -------------------------- */
+    @media (max-width: 980px){
+      .summary-grid{ grid-template-columns: 1fr; }
+      .modal-top{ grid-template-columns: 1fr; }
+      .modal-kv{ border-left: none; border-top: 1px solid rgba(255,255,255,0.10); }
+    }
+
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 2.5rem; }
+
+      .timeline::before { left: 20px; }
+
+      .day-card,
+      .day-card:nth-child(even) {
+        width: 100%;
+        margin-left: 0;
+        padding-left: 60px;
+        padding-right: 20px;
+        justify-content: flex-start;
+      }
+
+      .day-card::before,
+      .day-card:nth-child(even)::before {
+        left: 10px;
+        right: auto;
+      }
+
+      .day-card,
+      .day-card:nth-child(even) { transform: translateX(50px); }
+
+      .day-card.visible,
+      .day-card:nth-child(even).visible { transform: translateX(0); }
+
+      .topbar{ padding: 12px 12px; }
+      .brand{ min-width: 160px; }
+      .brand .titles .t2{ display:none; }
+      .pill .kbd{ display:none; }
+      .stats{ grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Floating Background Elements -->
+  <div class="floating-elements">
+    <div class="floating-element" style="left: 10%; animation-delay: 0s;">🛕</div>
+    <div class="floating-element" style="left: 20%; animation-delay: 3s;">🐘</div>
+    <div class="floating-element" style="left: 35%; animation-delay: 6s;">🍜</div>
+    <div class="floating-element" style="left: 50%; animation-delay: 9s;">🌺</div>
+    <div class="floating-element" style="left: 65%; animation-delay: 12s;">✈️</div>
+    <div class="floating-element" style="left: 80%; animation-delay: 15s;">🛶</div>
+    <div class="floating-element" style="left: 90%; animation-delay: 18s;">🏯</div>
+  </div>
+
+  <!-- Topbar -->
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo">BK</div>
+      <div class="titles">
+        <div class="t1">曼谷親子行程</div>
+        <div class="t2">互動時間軸｜篩選｜收藏｜匯出</div>
+      </div>
+    </div>
+
+    <div class="nav-actions">
+      <div class="pill" id="btnToday" title="跳到今天/下一個行程 (T)">
+        <i class="fa-solid fa-location-crosshairs"></i>
+        <span>跳到下一個</span>
+        <span class="kbd">T</span>
+      </div>
+
+      <div class="pill" id="btnAll" title="顯示全部天數 (A)">
+        <i class="fa-solid fa-layer-group"></i>
+        <span>全部</span>
+        <span class="kbd">A</span>
+      </div>
+
+      <div class="pill" id="btnFav" title="只看收藏 (F)">
+        <i class="fa-solid fa-heart"></i>
+        <span>收藏</span>
+        <span class="kbd">F</span>
+      </div>
+
+      <div class="pill primary" id="btnExport" title="匯出行程 (E)">
+        <i class="fa-solid fa-file-arrow-down"></i>
+        <span>匯出</span>
+        <span class="kbd">E</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero" id="top">
+    <div class="hero-inner">
+      <h1>🇹🇭 <span>曼谷</span>之旅</h1>
+      <p>探索微笑之國的精彩旅程（含互動時間軸與行程小工具）</p>
+
+      <div class="hero-badges" id="heroBadges">
+        <div class="badge"><i class="fa-solid fa-calendar-days"></i><span id="badgeDays">6 天</span></div>
+        <div class="badge"><i class="fa-solid fa-list-check"></i><span id="badgeItems">0 個行程點</span></div>
+        <div class="badge"><i class="fa-solid fa-heart"></i><span id="badgeFavs">0 個收藏</span></div>
+        <div class="badge"><i class="fa-solid fa-bolt"></i><span>點卡片看詳細</span></div>
+      </div>
+    </div>
+
+    <div class="scroll-indicator" id="scrollToSummary" title="往下">
+      <i class="fas fa-chevron-down"></i>
+    </div>
+  </section>
+
+  <!-- Summary / Controls Section -->
+  <section class="summary-section" id="controls">
+    <h2 class="section-title">行程控制台</h2>
+    <p class="subtitle">
+      你可以用 <b>主題篩選</b>（寺廟 / 夜市 / 動物園 / 遊樂園 / 市區親子…）、用<b>關鍵字</b>搜尋，
+      或把喜歡的行程點按 ♥ 收藏；點卡片可展開更詳細資訊，並支援匯出 TXT。
+    </p>
+
+    <div class="summary-grid">
+      <div class="panel">
+        <h3><i class="fa-solid fa-filter"></i>主題篩選</h3>
+        <div class="chips" id="chipRow"></div>
+
+        <div class="mini-row">
+          <div class="input">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input id="searchInput" type="text" placeholder="搜尋：例如 夜市 / Safari / 玉佛寺 / 按摩..." />
+          </div>
+
+          <div class="toggle" id="toggleCompact" data-on="false" title="精簡模式：只顯示前三個行程點">
+            <div class="switch"></div>
+            <div>
+              <div style="font-weight:800;">精簡模式</div>
+              <div style="opacity:.72; font-size:.86rem;">只顯示前三項</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="note" style="margin-top:12px;">
+          <b>快速鍵：</b>
+          <span style="opacity:.9;">
+            <b>A</b> 全部、<b>F</b> 收藏、<b>E</b> 匯出、<b>T</b> 跳到下一個、<b>Esc</b> 關閉視窗
+          </span>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h3><i class="fa-solid fa-chart-simple"></i>統計</h3>
+        <div class="stats">
+          <div class="stat"><div class="num" id="statDays">0</div><div class="lbl">天數</div></div>
+          <div class="stat"><div class="num" id="statItems">0</div><div class="lbl">行程點</div></div>
+          <div class="stat"><div class="num" id="statFavs">0</div><div class="lbl">收藏</div></div>
+        </div>
+
+        <div class="note">
+          <b>小提醒：</b>目前時間與「下一個行程」是以你瀏覽器所在時區判斷；
+          若想改成曼谷時間（UTC+7），可在 JS 中把 <code>TIMEZONE_OFFSET_MIN</code> 改為 420。
+        </div>
+
+        <div class="mini-actions">
+          <div class="mini-btn" id="btnClearFilters"><i class="fa-solid fa-eraser"></i>清除篩選</div>
+          <div class="mini-btn" id="btnClearFavs"><i class="fa-solid fa-heart-crack"></i>清空收藏</div>
+          <div class="mini-btn" id="btnScrollTop"><i class="fa-solid fa-arrow-up"></i>回到頂端</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Timeline Section -->
+  <section class="timeline-section" id="timeline">
+    <h2 class="section-title">行程時間軸</h2>
+    <div class="timeline" id="timelineRoot"></div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>🌏 探索世界，發現精彩 | Bangkok Trip</p>
+  </footer>
+
+  <!-- Modal -->
+  <div class="modal" id="modal">
+    <div class="modal-card" role="dialog" aria-modal="true" aria-label="行程詳細資訊">
+      <div class="close-x" id="modalClose" title="關閉 (Esc)"><i class="fa-solid fa-xmark"></i></div>
+
+      <div class="modal-top">
+        <div class="modal-hero">
+          <div style="display:flex; align-items:center; gap:10px;">
+            <div class="tag" id="modalDayTag"><i class="fa-solid fa-calendar"></i><span>DAY</span></div>
+            <div class="tag" id="modalThemeTag"><i class="fa-solid fa-tags"></i><span>主題</span></div>
+            <div class="tag" id="modalFavTag" style="display:none;"><i class="fa-solid fa-heart"></i><span>已收藏</span></div>
+          </div>
+          <h4 id="modalTitle">標題</h4>
+          <div class="small" id="modalDate">日期</div>
+          <div class="small" id="modalHint">點下方按鈕可收藏、複製摘要、或匯出全行程。</div>
+        </div>
+
+        <div class="modal-kv">
+          <div class="kv">
+            <div class="item"><div class="k">建議區域</div><div class="v" id="modalArea">—</div></div>
+            <div class="item"><div class="k">交通建議</div><div class="v" id="modalTransit">—</div></div>
+            <div class="item"><div class="k">備註</div><div class="v" id="modalNote">—</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-body">
+        <div class="photo-strip" id="modalGallery"></div>
+        <h5><i class="fa-solid fa-list-check"></i>當日行程點</h5>
+        <ul id="modalList"></ul>
+      </div>
+
+      <div class="modal-actions">
+        <div class="btn" id="btnCopy"><i class="fa-solid fa-copy"></i>複製摘要</div>
+        <div class="btn" id="btnToggleFav"><i class="fa-solid fa-heart"></i>收藏這一天</div>
+        <div class="btn primary" id="btnExport2"><i class="fa-solid fa-file-arrow-down"></i>匯出行程</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast"><i class="fa-solid fa-circle-check"></i><span id="toastText">已完成</span></div>
+
+  <script>
+    // =========================
+    // Data Model
+    // =========================
+    // 你可以依照需求持續擴充：
+    // - day.theme: 用於篩選
+    // - day.area/transit/note: 用於詳細視窗
+    // - activities[].id: 用於收藏/定位/匯出
+
+    
+    const TRIP = {
+      title: '曼谷親子六天五夜',
+      days: [
+        {
+          id: 'd1',
+          day: 1,
+          date: '2026/02/04 (三)',
+          title: '出發日：CI831 前往曼谷 + 飯店入住 + ICONSIAM 夜景',
+          theme: ['飛行', '抵達', '購物', '夜景', '親子'],
+          area: 'Suvarnabhumi (BKK) → Sukhumvit（Thong Lo / Ekkamai）',
+          transit: 'BKK 機場快線 ARL → MRT → BTS；或計程車（依孩子狀況彈性）',
+          note: '航班時間以長期班表為基準，實際以華航/機場當日公告為準。入住：Jasmine 59（Thong Lo 站步行約 8 分鐘）。',
+          photos: [
+            { src: 'https://images.unsplash.com/photo-1598971861713-54ad16a7e72e?auto=format&fit=crop&w=1200&q=80', cap: 'Suvarnabhumi Airport' },
+            { src: 'https://images.unsplash.com/photo-1562602833-0f4ab2fc46e4?auto=format&fit=crop&w=1200&q=80', cap: 'Airport Rail Link' },
+            { src: 'https://images.unsplash.com/photo-1600166898405-da9535204843?auto=format&fit=crop&w=1200&q=80', cap: 'ICONSIAM 河畔夜景' }
+          ],
+          activities: [
+            { id:'d1-a1', icon:'fa-plane-departure', text:'CI831 TPE→BKK（TPE T1 出發；預計 10:05-13:05）', time:'10:05', tags:['飛行','抵達'] },
+            { id:'d1-a2', icon:'fa-plane-arrival', text:'抵達 BKK（通關/領行李）', time:'13:05', tags:['抵達'] },
+            { id:'d1-a3', icon:'fa-train-subway', text:'大眾運輸到 Jasmine 59：ARL→Makkasan / MRT Phetchaburi→Sukhumvit→BTS Thong Lo→步行', time:'14:30', tags:['交通','親子'] },
+            { id:'d1-a4', icon:'fa-hotel', text:'Jasmine 59 入住 & 休息（泳池/小點心）', time:'16:30', tags:['親子'] },
+            { id:'d1-a5', icon:'fa-bag-shopping', text:'晚餐：ICONSIAM（SOOKSIAM 美食/室內親子友善）', time:'18:30', tags:['購物','夜景','親子'] },
+          ]
+        },
+        {
+          id: 'd2',
+          day: 2,
+          date: '2026/02/05 (四)',
+          title: '大城一日：獅子動物園 + 古都景點（建議包車/一日團）',
+          theme: ['動物園', '親子', '文化', '郊區'],
+          area: 'Ayutthaya（大城）',
+          transit: '包車/一日團（從市區單程約 1.5–2 小時，親子最省力）',
+          note: '若孩子怕熱，景點之間可用車上補眠/吃點心。大城寺廟參觀請準備遮陽、防蚊、薄外套（冷氣車）。',
+          photos: [
+            { src: 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=1200&q=80', cap: 'Ayutthaya 古城' },
+            { src: 'https://images.unsplash.com/photo-1542640244-7e672d6cef4e?auto=format&fit=crop&w=1200&q=80', cap: '親子動物互動' },
+            { src: 'https://images.unsplash.com/photo-1546015720-b8b30df5aa27?auto=format&fit=crop&w=1200&q=80', cap: '河畔夕陽' }
+          ],
+          activities: [
+            { id:'d2-a1', icon:'fa-mug-hot', text:'飯店早餐（出發前補水、防曬）', time:'08:00', tags:['親子'] },
+            { id:'d2-a2', icon:'fa-van-shuttle', text:'出發前往大城（車程約 1.5–2 小時）', time:'09:00', tags:['交通'] },
+            { id:'d2-a3', icon:'fa-paw', text:'大城獅子動物園（親子拍照/動物互動）', time:'11:00', tags:['動物園','親子'] },
+            { id:'d2-a4', icon:'fa-landmark', text:'周邊推薦：Wat Mahathat（樹根佛頭）/ Wat Chaiwatthanaram（經典河畔寺廟）', time:'14:00', tags:['文化','親子'] },
+            { id:'d2-a5', icon:'fa-ship', text:'(可選) 大城河畔短程船/傍晚回程', time:'16:30', tags:['親子','文化'] },
+            { id:'d2-a6', icon:'fa-bowl-food', text:'回曼谷晚餐（Thong Lo/Ekkamai 周邊）', time:'19:30', tags:['美食','親子'] },
+          ]
+        },
+        {
+          id: 'd3',
+          day: 3,
+          date: '2026/02/06 (五)',
+          title: 'Siam Amazing Park 水陸樂園放電日',
+          theme: ['遊樂園', '親子', '水上活動'],
+          area: 'Siam Amazing Park（Bangkok 東北側）',
+          transit: '建議計程車/包車（單程約 45–60 分）；大眾運輸可轉乘公車/計程車（時間較長）',
+          note: '帶泳衣/防曬/拖鞋；可準備防水袋與替換衣物。若孩子年紀小，可先鎖定水上區與輕度設施。',
+          photos: [
+            { src: 'https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=1200&q=80', cap: '水上樂園' },
+            { src: 'https://images.unsplash.com/photo-1542038784456-1ea8e935640e?auto=format&fit=crop&w=1200&q=80', cap: '親子玩水' },
+            { src: 'https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba?auto=format&fit=crop&w=1200&q=80', cap: '遊樂設施' }
+          ],
+          activities: [
+            { id:'d3-a1', icon:'fa-bowl-food', text:'早餐 & 整裝（泳具、防曬、毛巾）', time:'08:00', tags:['親子'] },
+            { id:'d3-a2', icon:'fa-taxi', text:'前往 Siam Amazing Park（交通抓 1 小時較保險）', time:'09:00', tags:['交通'] },
+            { id:'d3-a3', icon:'fa-water', text:'水上區：漂漂河 / 兒童戲水池', time:'10:30', tags:['水上活動','親子'] },
+            { id:'d3-a4', icon:'fa-person-running', text:'陸上區：輕度設施/親子適合區', time:'14:00', tags:['遊樂園','親子'] },
+            { id:'d3-a5', icon:'fa-ice-cream', text:'回飯店休息（補水、簡單晚餐/外帶）', time:'18:30', tags:['親子'] },
+          ]
+        },
+        {
+          id: 'd4',
+          day: 4,
+          date: '2026/02/07 (六)',
+          title: '換飯店日：Jasmine 59 → Cape House + Siam 親子下午',
+          theme: ['換飯店', '市區', '親子', '室內'],
+          area: 'Thong Lo → Chit Lom / Langsuan',
+          transit: 'BTS：Thong Lo → Chit Lom（步行/短程計程車到 Cape House）',
+          note: '退房前可先請飯店協助寄放行李；下午安排室內親子景點，避開最熱時段。',
+          photos: [
+            { src: 'https://images.unsplash.com/photo-1542556398-95fb5b9f163f?auto=format&fit=crop&w=1200&q=80', cap: 'BTS Skytrain' },
+            { src: 'https://images.unsplash.com/photo-1526481280695-3c687fd5432c?auto=format&fit=crop&w=1200&q=80', cap: 'Siam 商圈' },
+            { src: 'https://images.unsplash.com/photo-1527600478564-488952effedc?auto=format&fit=crop&w=1200&q=80', cap: '親子室內景點' }
+          ],
+          activities: [
+            { id:'d4-a1', icon:'fa-bowl-food', text:'早餐後整理行李/退房（可先寄放）', time:'09:00', tags:['換飯店'] },
+            { id:'d4-a2', icon:'fa-train-subway', text:'BTS 前往 Chit Lom（約 20–30 分 + 步行）', time:'10:30', tags:['交通','換飯店'] },
+            { id:'d4-a3', icon:'fa-hotel', text:'Cape House 入住（Langsuan）', time:'12:00', tags:['換飯店'] },
+            { id:'d4-a4', icon:'fa-fish-fins', text:'下午推薦：SEA LIFE Bangkok Ocean World（或 Siam Paragon 內親子設施）', time:'14:30', tags:['親子','室內'] },
+            { id:'d4-a5', icon:'fa-tree', text:'傍晚：Lumphini Park 放風/看蜥蜴（視體力）', time:'17:30', tags:['親子','市區'] },
+            { id:'d4-a6', icon:'fa-bowl-rice', text:'晚餐：Langsuan / Central Embassy 周邊', time:'19:00', tags:['美食','親子'] },
+          ]
+        },
+        {
+          id: 'd5',
+          day: 5,
+          date: '2026/02/08 (日)',
+          title: '郊區文化日：古城（Ancient City）/ 三頭象神博物館 + 巧克力村晚餐',
+          theme: ['文化', '親子', '郊區', '拍照'],
+          area: 'Samut Prakan（曼谷南側）',
+          transit: '建議包車/計程車（單程約 45–70 分）；若走大眾交通可 BTS 到 Kheha 再轉車',
+          note: '古城園區很大，建議租高爾夫車/腳踏車節省體力；傍晚再去 Chocolate Ville 更適合拍照與用餐。',
+          photos: [
+            { src: 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79f?auto=format&fit=crop&w=1200&q=80', cap: 'Ancient City（古城）' },
+            { src: 'https://images.unsplash.com/photo-1548588684-4d3e4b0a3b0e?auto=format&fit=crop&w=1200&q=80', cap: 'Erawan Museum' },
+            { src: 'https://images.unsplash.com/photo-1543340713-8d6b2b2e77f2?auto=format&fit=crop&w=1200&q=80', cap: 'Chocolate Ville' }
+          ],
+          activities: [
+            { id:'d5-a1', icon:'fa-bowl-food', text:'早餐 & 出發（交通抓 1 小時較保險）', time:'08:30', tags:['親子'] },
+            { id:'d5-a2', icon:'fa-camera', text:'古城（Ancient City / Muang Boran）參觀 + 租車代步', time:'10:00', tags:['文化','親子','拍照'] },
+            { id:'d5-a3', icon:'fa-landmark-dome', text:'加碼：三頭象神博物館（Erawan Museum）', time:'14:30', tags:['文化','拍照'] },
+            { id:'d5-a4', icon:'fa-mug-saucer', text:'回市區小休息/整理（避免一路累到晚上）', time:'17:00', tags:['親子'] },
+            { id:'d5-a5', icon:'fa-cookie-bite', text:'巧克力村 Chocolate Ville：晚餐 + 童話風拍照', time:'18:30', tags:['美食','親子','拍照'] },
+          ]
+        },
+        {
+          id: 'd6',
+          day: 6,
+          date: '2026/02/09 (一)',
+          title: '回國日：CI832 返回台灣',
+          theme: ['返程', '飛行', '交通'],
+          area: 'Cape House → BKK → TPE',
+          transit: '建議：BTS Chit Lom → Siam → Phaya Thai → ARL 進機場（約 50–60 分）',
+          note: '回程建議提早出發：親子 + 行李多，抓「起飛前 3–3.5 小時」離開飯店更保險。',
+          photos: [
+            { src: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1200&q=80', cap: '回程日' },
+            { src: 'https://images.unsplash.com/photo-1529070538774-1843cb3265df?auto=format&fit=crop&w=1200&q=80', cap: '機場候機' },
+            { src: 'https://images.unsplash.com/photo-1529070538774-1843cb3265df?auto=format&fit=crop&w=1200&q=80', cap: '飛行回家' }
+          ],
+          activities: [
+            { id:'d6-a1', icon:'fa-suitcase-rolling', text:'整理行李 / 退房（可請飯店協助叫車）', time:'10:30', tags:['返程'] },
+            { id:'d6-a2', icon:'fa-train-subway', text:'大眾運輸前往 BKK：BTS→Phaya Thai→ARL（約 54 分）', time:'11:15', tags:['交通','返程'] },
+            { id:'d6-a3', icon:'fa-plane-departure', text:'CI832 BKK→TPE（預計 14:05-18:40；抵達 TPE T1）', time:'14:05', tags:['飛行','返程'] },
+          ]
+        }
+      ]
+    };
+
+
+    // 若想以「曼谷時間」判斷下一個行程，改成 420（UTC+7）
+    const TIMEZONE_OFFSET_MIN = null; // null = 使用瀏覽器時區；420 = 曼谷
+
+
+    // =========================
+    // Utilities
+    // =========================
+    const $ = (sel, root=document) => root.querySelector(sel);
+    const $$ = (sel, root=document) => Array.from(root.querySelectorAll(sel));
+
+    function pad2(n){ return String(n).padStart(2,'0'); }
+
+    function showToast(msg){
+      const toast = $('#toast');
+      $('#toastText').textContent = msg;
+      toast.classList.add('show');
+      window.clearTimeout(showToast._t);
+      showToast._t = window.setTimeout(()=>toast.classList.remove('show'), 1800);
+    }
+
+    function safeJsonParse(s, fallback){
+      try{ return JSON.parse(s); }catch(_){ return fallback; }
+    }
+
+    function downloadText(filename, text){
+      const blob = new Blob([text], {type:'text/plain;charset=utf-8'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    }
+
+    // Convert "2024/03/15 (五)" + "14:00" to Date
+    // 注意：這裡使用瀏覽器時區；若 TIMEZONE_OFFSET_MIN 設定為 420，會以固定 offset 計算。
+    function parseDateTime(dateStr, timeStr){
+      // dateStr: YYYY/MM/DD (X)
+      const m = dateStr.match(/(\d{4})\/(\d{2})\/(\d{2})/);
+      if(!m) return null;
+      const y = Number(m[1]), mo = Number(m[2]), d = Number(m[3]);
+      const [hh, mm] = timeStr.split(':').map(Number);
+
+      if(TIMEZONE_OFFSET_MIN === null){
+        return new Date(y, mo-1, d, hh, mm, 0, 0);
+      }
+
+      // Fixed timezone offset approach:
+      // Build a UTC timestamp = local(timezone) - offset
+      const utcMs = Date.UTC(y, mo-1, d, hh, mm) - (TIMEZONE_OFFSET_MIN * 60 * 1000);
+      return new Date(utcMs);
+    }
+
+    function nowInMode(){
+      if(TIMEZONE_OFFSET_MIN === null) return new Date();
+      // If using fixed offset, return a Date object representing "now" in that fixed timezone (by shifting).
+      const now = new Date();
+      const utc = now.getTime() + (now.getTimezoneOffset() * 60 * 1000);
+      const tz = new Date(utc + TIMEZONE_OFFSET_MIN * 60 * 1000);
+      return tz;
+    }
+
+    // =========================
+    // State
+    // =========================
+    const STORAGE_KEY_FAV = 'bkk_trip_favs_v1';
+    const STORAGE_KEY_FILTER = 'bkk_trip_filter_v1';
+
+    const state = {
+      filterTheme: 'all',
+      search: '',
+      onlyFav: false,
+      compact: false,
+      favDays: new Set(),
+    };
+
+    function loadState(){
+      const fav = safeJsonParse(localStorage.getItem(STORAGE_KEY_FAV), []);
+      state.favDays = new Set(Array.isArray(fav) ? fav : []);
+
+      const f = safeJsonParse(localStorage.getItem(STORAGE_KEY_FILTER), null);
+      if(f){
+        state.filterTheme = f.filterTheme ?? 'all';
+        state.search = f.search ?? '';
+        state.onlyFav = !!f.onlyFav;
+        state.compact = !!f.compact;
+      }
+    }
+
+    function saveState(){
+      localStorage.setItem(STORAGE_KEY_FAV, JSON.stringify([...state.favDays]));
+      localStorage.setItem(STORAGE_KEY_FILTER, JSON.stringify({
+        filterTheme: state.filterTheme,
+        search: state.search,
+        onlyFav: state.onlyFav,
+        compact: state.compact,
+      }));
+    }
+
+    // =========================
+    // Derived
+    // =========================
+    function getAllThemes(){
+      const set = new Set();
+      TRIP.days.forEach(d => d.theme.forEach(t => set.add(t)));
+      return ['all', ...Array.from(set)];
+    }
+
+    function totalActivities(){
+      return TRIP.days.reduce((acc,d)=>acc + d.activities.length, 0);
+    }
+
+    function matchesSearch(day){
+      const q = state.search.trim().toLowerCase();
+      if(!q) return true;
+      const hay = [day.title, day.date, day.area, day.transit, day.note, ...day.theme, ...day.activities.map(a=>a.text), ...day.activities.flatMap(a=>a.tags||[])].join(' ').toLowerCase();
+      return hay.includes(q);
+    }
+
+    function matchesTheme(day){
+      if(state.filterTheme === 'all') return true;
+      return day.theme.includes(state.filterTheme) || day.activities.some(a => (a.tags||[]).includes(state.filterTheme));
+    }
+
+    function matchesFav(day){
+      if(!state.onlyFav) return true;
+      return state.favDays.has(day.id);
+    }
+
+    function filteredDays(){
+      return TRIP.days.filter(d => matchesSearch(d) && matchesTheme(d) && matchesFav(d));
+    }
+
+    // =========================
+    // Render: Chips
+    // =========================
+    function renderChips(){
+      const themes = getAllThemes();
+      const root = $('#chipRow');
+      root.innerHTML = '';
+
+      themes.forEach(t => {
+        const el = document.createElement('div');
+        el.className = 'chip' + (state.filterTheme === t ? ' active' : '');
+        const icon = t === 'all' ? 'fa-layer-group'
+          : (t === '夜市' ? 'fa-moon'
+          : (t === '寺廟' ? 'fa-landmark'
+          : (t === '動物園' ? 'fa-otter'
+          : (t === '遊樂園' ? 'fa-person-skating'
+          : (t === '親子' ? 'fa-children'
+          : (t === '購物' ? 'fa-bag-shopping'
+          : (t === '按摩' ? 'fa-spa'
+          : (t === '河畔' ? 'fa-water'
+          : 'fa-tag'))))))));
+
+        el.innerHTML = `<i class="fa-solid ${icon}"></i><span>${t === 'all' ? '全部主題' : t}</span>`;
+        el.addEventListener('click', () => {
+          state.filterTheme = t;
+          saveState();
+          rerender();
+          showToast(t === 'all' ? '已顯示全部主題' : `已套用篩選：${t}`);
+        });
+        root.appendChild(el);
+      });
+    }
+
+    // =========================
+    // Render: Timeline
+    // =========================
+    function buildDayCard(day){
+      const wrap = document.createElement('div');
+      wrap.className = 'day-card';
+      wrap.dataset.dayId = day.id;
+
+      const isFav = state.favDays.has(day.id);
+      const themeTags = day.theme.map(t => `<span class="tag"><i class="fa-solid fa-tag"></i>${t}</span>`).join('');
+
+      const acts = (state.compact ? day.activities.slice(0,3) : day.activities)
+        .map(a => `
+          <li>
+            <i class="fa-solid ${a.icon}"></i>
+            <span>${a.text}</span>
+            <span class="activity-time">${a.time}</span>
+          </li>
+        `).join('');
+
+      const moreHint = state.compact && day.activities.length > 3
+        ? `<div class="note" style="margin-top:12px;">已啟用<b>精簡模式</b>，尚有 ${day.activities.length-3} 個行程點未顯示（點卡片可看全部）。</div>`
+        : '';
+
+      wrap.innerHTML = `
+        <div class="card-content">
+          <div class="day-header">
+            <div class="day-number"><span>DAY</span><span>${day.day}</span></div>
+            <div>
+              <div class="day-title">${day.title} ${isFav ? ' <i class="fa-solid fa-heart" style="color:var(--gold);"></i>' : ''}</div>
+              <div class="day-date">${day.date}</div>
+              <div class="meta-row">${themeTags}</div>
+            </div>
+          </div>
+          <ul class="activities">${acts}</ul>
+          ${moreHint}
+          <div class="mini-actions">
+            <div class="mini-btn" data-action="open"><i class="fa-solid fa-circle-info"></i>詳細</div>
+            <div class="mini-btn" data-action="fav"><i class="fa-solid ${isFav ? 'fa-heart' : 'fa-heart-circle-plus'}"></i>${isFav ? '取消收藏' : '收藏'}</div>
+            <div class="mini-btn" data-action="jump"><i class="fa-solid fa-location-dot"></i>定位</div>
+          </div>
+        </div>
+      `;
+
+      // Card click: open modal
+      wrap.querySelector('[data-action="open"]').addEventListener('click', (e)=>{ e.stopPropagation(); openModal(day.id); });
+      wrap.addEventListener('click', ()=> openModal(day.id));
+
+      // Fav
+      wrap.querySelector('[data-action="fav"]').addEventListener('click', (e)=>{
+        e.stopPropagation();
+        toggleFav(day.id);
+      });
+
+      // Jump
+      wrap.querySelector('[data-action="jump"]').addEventListener('click', (e)=>{
+        e.stopPropagation();
+        document.querySelector(`[data-day-id="${day.id}"]`)?.scrollIntoView({behavior:'smooth', block:'center'});
+        showToast('已定位到該天');
+      });
+
+      return wrap;
+    }
+
+    function renderTimeline(){
+      const root = $('#timelineRoot');
+      root.innerHTML = '';
+
+      const days = filteredDays();
+      if(days.length === 0){
+        const empty = document.createElement('div');
+        empty.className = 'panel';
+        empty.style.maxWidth = '760px';
+        empty.style.margin = '0 auto';
+        empty.innerHTML = `
+          <h3><i class="fa-solid fa-circle-exclamation"></i>沒有符合的行程</h3>
+          <p style="opacity:.78; line-height:1.6; margin-top:8px;">
+            請嘗試調整主題篩選、清除搜尋關鍵字，或關閉「只看收藏」。
+          </p>
+          <div class="mini-actions" style="margin-top:14px;">
+            <div class="mini-btn" id="emptyReset"><i class="fa-solid fa-rotate-left"></i>重設</div>
+          </div>
+        `;
+        root.appendChild(empty);
+        $('#emptyReset')?.addEventListener('click', ()=>{
+          state.filterTheme = 'all';
+          state.search = '';
+          state.onlyFav = false;
+          state.compact = false;
+          saveState();
+          rerender();
+          showToast('已重設');
+        });
+        return;
+      }
+
+      days.forEach(d => root.appendChild(buildDayCard(d)));
+
+      // re-bind observer
+      setupObserver();
+    }
+
+    // =========================
+    // Intersection Observer
+    // =========================
+    let observer = null;
+
+    function setupObserver(){
+      if(observer){
+        try{ observer.disconnect(); }catch(_){ }
+      }
+
+      const observerOptions = { threshold: 0.2, rootMargin: '0px 0px -50px 0px' };
+      observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) entry.target.classList.add('visible');
+        });
+      }, observerOptions);
+
+      $$('.day-card').forEach(card => observer.observe(card));
+    }
+
+    // =========================
+    // Modal
+    // =========================
+    function openModal(dayId){
+      const day = TRIP.days.find(d=>d.id===dayId);
+      if(!day) return;
+
+      $('#modal').classList.add('open');
+      document.body.style.overflow = 'hidden';
+
+      const isFav = state.favDays.has(day.id);
+
+      $('#modalTitle').textContent = day.title;
+      $('#modalDate').textContent = day.date;
+      $('#modalArea').textContent = day.area || '—';
+      $('#modalTransit').textContent = day.transit || '—';
+      $('#modalNote').textContent = day.note || '—';
+
+      $('#modalDayTag').innerHTML = `<i class="fa-solid fa-calendar"></i><span>DAY ${day.day}</span>`;
+      $('#modalThemeTag').innerHTML = `<i class="fa-solid fa-tags"></i><span>${day.theme.join(' / ')}</span>`;
+      $('#modalFavTag').style.display = isFav ? 'inline-flex' : 'none';
+
+      const gallery = $('#modalGallery');
+      const photos = Array.isArray(day.photos) ? day.photos.slice(0,3) : [];
+      gallery.innerHTML = photos.length ? photos.map(p => `
+        <div class="photo">
+          <img src="${p.src}" alt="${(p.cap||'')}" loading="lazy">
+          <div class="cap">${p.cap||''}</div>
+        </div>
+      `).join('') : '<div class="note" style="margin:0;">此天尚未設定代表照片（可在 TRIP.days[].photos 補上）。</div>';
+
+      const list = $('#modalList');
+      list.innerHTML = '';
+      day.activities.forEach(a => {
+        const li = document.createElement('li');
+        li.innerHTML = `<i class="fa-solid ${a.icon}" style="color:var(--gold);"></i><span class="t">${a.text}</span><span class="tm">${a.time}</span>`;
+        list.appendChild(li);
+      });
+
+      const btnFav = $('#btnToggleFav');
+      btnFav.innerHTML = `<i class="fa-solid fa-heart"></i>${isFav ? '取消收藏這一天' : '收藏這一天'}`;
+      btnFav.onclick = () => toggleFav(day.id, true);
+
+      $('#btnCopy').onclick = () => {
+        const summary = buildDaySummary(day);
+        navigator.clipboard?.writeText(summary).then(()=>showToast('已複製到剪貼簿')).catch(()=>showToast('複製失敗（瀏覽器限制）'));
+      };
+
+      $('#btnExport2').onclick = () => exportTrip();
+
+      // focus close
+      $('#modalClose').focus?.();
+    }
+
+    function closeModal(){
+      $('#modal').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    // =========================
+    // Favorites
+    // =========================
+    function toggleFav(dayId, fromModal=false){
+      if(state.favDays.has(dayId)){
+        state.favDays.delete(dayId);
+        showToast('已取消收藏');
+      } else {
+        state.favDays.add(dayId);
+        showToast('已加入收藏');
+      }
+      saveState();
+      rerender(false);
+
+      if(fromModal){
+        // update modal badge/button
+        const isFav = state.favDays.has(dayId);
+        $('#modalFavTag').style.display = isFav ? 'inline-flex' : 'none';
+        $('#btnToggleFav').innerHTML = `<i class="fa-solid fa-heart"></i>${isFav ? '取消收藏這一天' : '收藏這一天'}`;
+      }
+    }
+
+    // =========================
+    // Export
+    // =========================
+    function buildDaySummary(day){
+      const lines = [];
+      lines.push(`DAY ${day.day}｜${day.title}`);
+      lines.push(`日期：${day.date}`);
+      if(day.area) lines.push(`區域：${day.area}`);
+      if(day.transit) lines.push(`交通：${day.transit}`);
+      if(day.theme?.length) lines.push(`主題：${day.theme.join(' / ')}`);
+      if(day.note) lines.push(`備註：${day.note}`);
+      lines.push('行程：');
+      day.activities.forEach(a => lines.push(`- ${a.time}  ${a.text}`));
+      return lines.join('\n');
+    }
+
+    function exportTrip(){
+      const days = filteredDays();
+      const favOnly = state.onlyFav;
+      const title = `${TRIP.title}｜${favOnly ? '收藏' : '行程'}匯出`;
+
+      const out = [];
+      out.push(title);
+      out.push('==============================');
+      out.push(`匯出時間：${new Date().toLocaleString()}`);
+      out.push(`主題篩選：${state.filterTheme === 'all' ? '全部' : state.filterTheme}`);
+      out.push(`搜尋：${state.search ? state.search : '(無)'}`);
+      out.push(`只看收藏：${state.onlyFav ? '是' : '否'}`);
+      out.push(`精簡模式：${state.compact ? '是' : '否'}`);
+      out.push('');
+
+      days.forEach((d, idx) => {
+        out.push(buildDaySummary(d));
+        if(idx !== days.length-1) out.push('\n------------------------------\n');
+      });
+
+      const filename = `Bangkok_Trip_${favOnly ? 'Fav' : 'All'}_${pad2(new Date().getMonth()+1)}${pad2(new Date().getDate())}.txt`;
+      downloadText(filename, out.join('\n'));
+      showToast('已匯出 TXT');
+    }
+
+    // =========================
+    // Jump to next upcoming activity
+    // =========================
+    function jumpToNext(){
+      const now = nowInMode();
+      const candidates = [];
+
+      TRIP.days.forEach(day => {
+        day.activities.forEach(a => {
+          const dt = parseDateTime(day.date, a.time);
+          if(dt) candidates.push({ day, a, dt });
+        });
+      });
+
+      candidates.sort((x,y)=>x.dt - y.dt);
+      const next = candidates.find(c => c.dt > now);
+
+      if(!next){
+        showToast('找不到下一個（可能已結束或日期不在未來）');
+        document.querySelector('#timeline')?.scrollIntoView({behavior:'smooth'});
+        return;
+      }
+
+      // ensure filters include the day
+      state.onlyFav = false;
+      state.filterTheme = 'all';
+      state.search = '';
+      saveState();
+      rerender(false);
+
+      // scroll to that day card
+      requestAnimationFrame(()=>{
+        const el = document.querySelector(`[data-day-id="${next.day.id}"]`);
+        el?.scrollIntoView({behavior:'smooth', block:'center'});
+        showToast(`下一個：DAY ${next.day.day} ${next.a.time} ${next.a.text}`);
+      });
+    }
+
+    // =========================
+    // Stats
+    // =========================
+    function renderStats(){
+      const daysShown = filteredDays().length;
+      const itemsShown = filteredDays().reduce((acc,d)=> acc + (state.compact ? Math.min(3, d.activities.length) : d.activities.length), 0);
+
+      $('#statDays').textContent = String(daysShown);
+      $('#statItems').textContent = String(itemsShown);
+      $('#statFavs').textContent = String(state.favDays.size);
+
+      $('#badgeDays').textContent = `${TRIP.days.length} 天`;
+      $('#badgeItems').textContent = `${totalActivities()} 個行程點`;
+      $('#badgeFavs').textContent = `${state.favDays.size} 個收藏`;
+    }
+
+    // =========================
+    // Rerender
+    // =========================
+    function rerender(scrollToTimeline=true){
+      renderChips();
+      renderTimeline();
+      renderStats();
+
+      // update buttons
+      $('#btnFav').classList.toggle('active', state.onlyFav);
+      $('#btnAll').classList.toggle('active', !state.onlyFav && state.filterTheme==='all' && !state.search);
+      $('#toggleCompact').dataset.on = state.compact ? 'true' : 'false';
+      $('#searchInput').value = state.search;
+
+      if(scrollToTimeline){
+        document.querySelector('#timeline')?.scrollIntoView({behavior:'smooth', block:'start'});
+      }
+    }
+
+    // =========================
+    // Event Wiring
+    // =========================
+    function wireEvents(){
+      // Hero scroll
+      $('#scrollToSummary').addEventListener('click', () => {
+        document.querySelector('#controls').scrollIntoView({behavior:'smooth'});
+      });
+
+      // Smooth scroll top
+      $('#btnScrollTop').addEventListener('click', ()=> document.querySelector('#top')?.scrollIntoView({behavior:'smooth'}));
+
+      // Export
+      $('#btnExport').addEventListener('click', exportTrip);
+
+      // All
+      $('#btnAll').addEventListener('click', ()=>{
+        state.onlyFav = false;
+        state.filterTheme = 'all';
+        state.search = '';
+        saveState();
+        rerender();
+        showToast('已顯示全部');
+      });
+
+      // Fav
+      $('#btnFav').addEventListener('click', ()=>{
+        state.onlyFav = !state.onlyFav;
+        saveState();
+        rerender();
+        showToast(state.onlyFav ? '已切換：只看收藏' : '已切換：顯示全部');
+      });
+
+      // Jump next
+      $('#btnToday').addEventListener('click', jumpToNext);
+
+      // Search
+      $('#searchInput').addEventListener('input', (e)=>{
+        state.search = e.target.value;
+        saveState();
+        rerender(false);
+      });
+
+      // Compact toggle
+      $('#toggleCompact').addEventListener('click', ()=>{
+        state.compact = !state.compact;
+        saveState();
+        rerender(false);
+        showToast(state.compact ? '已啟用精簡模式' : '已關閉精簡模式');
+      });
+
+      // Clear filters
+      $('#btnClearFilters').addEventListener('click', ()=>{
+        state.filterTheme = 'all';
+        state.search = '';
+        state.onlyFav = false;
+        state.compact = false;
+        saveState();
+        rerender(false);
+        showToast('已清除篩選');
+      });
+
+      // Clear favs
+      $('#btnClearFavs').addEventListener('click', ()=>{
+        state.favDays.clear();
+        saveState();
+        rerender(false);
+        showToast('已清空收藏');
+      });
+
+      // Modal close
+      $('#modalClose').addEventListener('click', closeModal);
+      $('#modal').addEventListener('click', (e)=>{
+        if(e.target.id === 'modal') closeModal();
+      });
+
+      window.addEventListener('keydown', (e)=>{
+        const key = e.key.toLowerCase();
+        if(key === 'escape') closeModal();
+        if(key === 'a') $('#btnAll').click();
+        if(key === 'f') $('#btnFav').click();
+        if(key === 'e') $('#btnExport').click();
+        if(key === 't') $('#btnToday').click();
+      });
+
+      // Parallax on hero
+      window.addEventListener('scroll', () => {
+        const scrolled = window.pageYOffset;
+        const hero = document.querySelector('.hero');
+        hero.style.backgroundPositionY = scrolled * 0.45 + 'px';
+      });
+    }
+
+    // =========================
+    // Init
+    // =========================
+    function init(){
+      loadState();
+      wireEvents();
+      rerender(false);
+
+      // default focus values
+      $('#searchInput').value = state.search;
+      $('#toggleCompact').dataset.on = state.compact ? 'true' : 'false';
+
+      // scroll to timeline on initial load only if there's a saved filter
+      const hasSaved = !!localStorage.getItem(STORAGE_KEY_FILTER);
+      if(hasSaved) {
+        // no auto-scroll; keep user at top
+      }
+    }
+
+    init();
+  </script>
+</body>
+</html>
